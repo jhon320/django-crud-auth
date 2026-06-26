@@ -2,13 +2,41 @@
 
 {% block content %}
 
-<h1>CReate task</h1>
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-7">
+            <div class="card shadow-lg border-0 rounded-4">
+                <div class="card-header bg-primary text-white rounded-top-4">
+                    <h3 class="mb-0">
+                        <i class="bi bi-plus-circle"></i>
+                        Crear Nueva Tarea
+                    </h3>
+                </div>
+                <div class="card-body p-4">
+                    {% if error %}
+                    <div class="alert alert-danger">
+                        {{ error }}
+                    </div>
+                    {% endif %}
+                    <form action="/create_task/" method="POST">
+                        {% csrf_token %}
 
-{{error}}
-<form action="/create_task/" method="POST">
-  {% csrf_token %}
-  {{form}}
+                        {{ form.as_p }}
+                        <div class="d-flex justify-content-end gap-2 mt-4">
+                            <a href="{% url 'tasks' %}" class="btn btn-secondary">
+                                <i class="bi bi-arrow-left"></i>
+                                Cancelar
+                            </a>
+                            <button class="btn btn-success">
+                                <i class="bi bi-check-circle"></i>
+                                Guardar
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
-  <button>Save</button>
-</form>
 {% endblock %}

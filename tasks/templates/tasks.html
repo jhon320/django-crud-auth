@@ -1,20 +1,158 @@
-{% extends 'base.html' %} {% block content %}
+{% extends 'base.html' %}
 
-<h1>tasks</h1>
+{% block content %}
 
-<ul>
-  {% for task in tasks %}
-  <li>
-    <a href="{% url 'task_detail' task.id %}">
-      {% if task.important %}
-      <strong>{{task.title}}</strong>
-      {% else %} {{task.id}} {{task.title}} {% endif %}
-      <p>{{task.description}}</p>
+<div class="container mt-5">
 
-      {{task.datecompleted|date:'M j Y:i'}}
-    </a>
-  </li>
-  {% endfor %}
-</ul>
+    <div class="d-flex justify-content-between mb-3">
+
+        <h2>Administración de Tareas</h2>
+
+        <a href="{% url 'create_task' %}"
+           class="btn btn-success">
+
+            + Nueva tarea
+
+        </a>
+
+    </div>
+
+    <table class="table table-striped table-hover table-bordered">
+
+        <thead class="table-dark">
+
+            <tr>
+
+                <th>ID</th>
+
+                <th>Título</th>
+
+                <th>Descripción</th>
+
+                <th>Importante</th>
+
+                <th>Estado</th>
+
+                <th>Acciones</th>
+
+            </tr>
+
+        </thead>
+
+        <tbody>
+
+            {% for task in tasks %}
+
+            <tr>
+
+                <td>{{task.id}}</td>
+
+                <td>
+
+                    {% if task.important %}
+
+                    <strong>{{task.title}}</strong>
+
+                    {% else %}
+
+                    {{task.title}}
+
+                    {% endif %}
+
+                </td>
+
+                <td>{{task.description|truncatechars:40}}</td>
+
+                <td>
+
+                    {% if task.important %}
+
+                    Sí
+
+                    {% else %}
+
+                    No
+
+                    {% endif %}
+
+                </td>
+
+                <td>
+
+                    {% if task.datecompleted %}
+
+                    Completada
+
+                    {% else %}
+
+                    Pendiente
+
+                    {% endif %}
+
+                </td>
+
+                <td>
+
+                    <a class="btn btn-primary btn-sm"
+                       href="{% url 'task_detail' task.id %}">
+                        Ver
+                    </a>
+
+                    <a class="btn btn-warning btn-sm"
+                       href="{% url 'task_detail' task.id %}">
+                        Editar
+                    </a>
+
+                    <form method="POST"
+                          action="{% url 'complete_task' task.id %}"
+                          style="display:inline;">
+
+                        {% csrf_token %}
+
+                        <button class="btn btn-success btn-sm">
+
+                            Completar
+
+                        </button>
+
+                    </form>
+
+                    <form method="POST"
+                          action="{% url 'delete_task' task.id %}"
+                          style="display:inline;">
+
+                        {% csrf_token %}
+
+                        <button class="btn btn-danger btn-sm">
+
+                            Eliminar
+
+                        </button>
+
+                    </form>
+
+                </td>
+
+            </tr>
+
+            {% empty %}
+
+            <tr>
+
+                <td colspan="6" class="text-center">
+
+                    No existen tareas.
+
+                </td>
+
+            </tr>
+
+            {% endfor %}
+
+        </tbody>
+
+    </table>
+
+</div>
 
 {% endblock %}
