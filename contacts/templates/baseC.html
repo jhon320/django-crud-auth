@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container mt-4">
+
+    <h2>Mis Contactos</h2>
+
+    <a href="{% url 'create_contact' %}" class="btn btn-primary mb-3">
+        + Nuevo contacto
+    </a>
+
+    {% for contact in contact %}
+        <div class="card mb-2 p-3">
+            <h5>{{ contact.name }}</h5>
+            <p>{{ contact.email }} | {{ contact.phone }}</p>
+        </div>
+    {% empty %}
+        <p>No tienes contactos aún.</p>
+    {% endfor %}
+
+</div>
+
+{% endblock %}

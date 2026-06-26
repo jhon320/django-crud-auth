@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="container mt-4">
+
+    <div class="card shadow-sm p-4">
+
+        <h2>
+            {{ contact.first_name }} {{ contact.last_name }}
+        </h2>
+
+        <hr>
+
+        <p><strong>Email:</strong> {{ contact.email }}</p>
+        <p><strong>Teléfono:</strong> {{ contact.phone }}</p>
+
+        {% if contact.address %}
+        <p><strong>Dirección:</strong> {{ contact.address }}</p>
+        {% endif %}
+
+        {% if contact.company %}
+        <p><strong>Empresa:</strong> {{ contact.company }}</p>
+        {% endif %}
+
+        {% if contact.notes %}
+        <p><strong>Notas:</strong> {{ contact.notes }}</p>
+        {% endif %}
+
+        {% if contact.favorite %}
+            <span class="badge bg-warning text-dark">⭐ Favorito</span>
+        {% endif %}
+
+        <hr>
+
+        <a href="{% url 'update_contact' contact.id %}" class="btn btn-warning">
+            Editar
+        </a>
+
+        <a href="{% url 'delete_contact' contact.id %}" class="btn btn-danger">
+            Eliminar
+        </a>
+
+        <a href="{% url 'contacts' %}" class="btn btn-secondary">
+            Volver
+        </a>
+
+    </div>
+
+</div>
+
+{% endblock %}

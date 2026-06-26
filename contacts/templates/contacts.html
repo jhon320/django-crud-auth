@@ -1,0 +1,71 @@
+{% extends 'baseC.html' %}
+
+{% block content %}
+
+<div class="container mt-4">
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2>Mis Contactos</h2>
+
+        <a href="{% url 'create_contact' %}" class="btn btn-primary">
+            Nuevo Contacto
+        </a>
+    </div>
+
+    {% if contacts %}
+
+    <div class="row">
+
+        {% for contact in contacts %}
+
+        <div class="col-md-4 mb-4">
+
+            <div class="card shadow">
+
+                <div class="card-body">
+
+                    <h5 class="card-title">
+                        {{ contact.name }}
+                    </h5>
+
+                    <hr>
+
+                    <p>
+                        <strong>Email:</strong><br>
+                        {{ contact.email }}
+                    </p>
+
+                    <p>
+                        <strong>Teléfono:</strong><br>
+                        {{ contact.phone }}
+                    </p>
+
+                    <a href="{% url 'contact_detail' contact.id %}" class="btn btn-info btn-sm">
+                        Ver
+                    </a>
+
+                    <a href="{% url 'update_contact' contact.id %}" class="btn btn-warning btn-sm">
+                        Editar
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        {% endfor %}
+
+    </div>
+
+    {% else %}
+
+        <div class="alert alert-info">
+            No tienes contactos registrados.
+        </div>
+
+    {% endif %}
+
+</div>
+
+{% endblock %}

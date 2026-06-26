@@ -1,0 +1,35 @@
+{% extends 'baseC.html' %}
+
+{% block content %}
+
+<div class="container mt-5">
+
+    <div class="card shadow">
+
+        <div class="card-body text-center">
+
+            <h3>¿Eliminar este contacto?</h3>
+
+            <p>{{ contact.name }}</p>
+
+            <form method="POST">
+
+                {% csrf_token %}
+
+                <button class="btn btn-danger">
+                    Eliminar
+                </button>
+
+                <a href="{% url 'contacts' %}" class="btn btn-secondary">
+                    Cancelar
+                </a>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

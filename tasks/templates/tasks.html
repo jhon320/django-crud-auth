@@ -1,158 +1,34 @@
-{% extends 'base.html' %}
+<!DOCTYPE html>
+<html lang="es">
 
-{% block content %}
+<head>
 
-<div class="container mt-5">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <div class="d-flex justify-content-between mb-3">
+    <title>Django CRUD</title>
 
-        <h2>Administración de Tareas</h2>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css">
 
-        <a href="{% url 'create_task' %}"
-           class="btn btn-success">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 
-            + Nueva tarea
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"></script>
 
-        </a>
+</head>
 
-    </div>
+<body>
 
-    <table class="table table-striped table-hover table-bordered">
+    {% include '_navbar.html' %}
 
-        <thead class="table-dark">
+    {% block content %}
+    {% endblock %}
 
-            <tr>
+</body>
 
-                <th>ID</th>
-
-                <th>Título</th>
-
-                <th>Descripción</th>
-
-                <th>Importante</th>
-
-                <th>Estado</th>
-
-                <th>Acciones</th>
-
-            </tr>
-
-        </thead>
-
-        <tbody>
-
-            {% for task in tasks %}
-
-            <tr>
-
-                <td>{{task.id}}</td>
-
-                <td>
-
-                    {% if task.important %}
-
-                    <strong>{{task.title}}</strong>
-
-                    {% else %}
-
-                    {{task.title}}
-
-                    {% endif %}
-
-                </td>
-
-                <td>{{task.description|truncatechars:40}}</td>
-
-                <td>
-
-                    {% if task.important %}
-
-                    Sí
-
-                    {% else %}
-
-                    No
-
-                    {% endif %}
-
-                </td>
-
-                <td>
-
-                    {% if task.datecompleted %}
-
-                    Completada
-
-                    {% else %}
-
-                    Pendiente
-
-                    {% endif %}
-
-                </td>
-
-                <td>
-
-                    <a class="btn btn-primary btn-sm"
-                       href="{% url 'task_detail' task.id %}">
-                        Ver
-                    </a>
-
-                    <a class="btn btn-warning btn-sm"
-                       href="{% url 'task_detail' task.id %}">
-                        Editar
-                    </a>
-
-                    <form method="POST"
-                          action="{% url 'complete_task' task.id %}"
-                          style="display:inline;">
-
-                        {% csrf_token %}
-
-                        <button class="btn btn-success btn-sm">
-
-                            Completar
-
-                        </button>
-
-                    </form>
-
-                    <form method="POST"
-                          action="{% url 'delete_task' task.id %}"
-                          style="display:inline;">
-
-                        {% csrf_token %}
-
-                        <button class="btn btn-danger btn-sm">
-
-                            Eliminar
-
-                        </button>
-
-                    </form>
-
-                </td>
-
-            </tr>
-
-            {% empty %}
-
-            <tr>
-
-                <td colspan="6" class="text-center">
-
-                    No existen tareas.
-
-                </td>
-
-            </tr>
-
-            {% endfor %}
-
-        </tbody>
-
-    </table>
-
-</div>
-
-{% endblock %}
+</html>

@@ -16,18 +16,34 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+
 from tasks import views
+from contacts import views as contact_views
 
 urlpatterns = [
+    # Home
     path('', views.home, name='home'),
+
+    # Admin
     path('admin/', admin.site.urls),
+
+    # Autenticación
     path('signup/', views.signup, name='signup'),
+    path('signin/', views.signin, name='signin'),
+    path('logout/', views.signout, name='logout'),
+
+    # Tasks
     path('tasks/', views.tasks, name='tasks'),
     path('tasks_completed/', views.tasks_completed, name='tasks_completed'),
-    path('logout/', views.signout, name='logout'),
-    path('signin/', views.signin, name='signin'),
     path('create_task/', views.create_task, name='create_task'),
-    path('tasks/<int:task_id>', views.task_detail, name='task_detail'),
-    path('taks/<int:task_id>/complete', views.complete_task, name='complete_task'),
-    path('tasks/<int:task_id>/delete', views.delete_task, name='delete_task'),
+    path('tasks/<int:task_id>/', views.task_detail, name='task_detail'),
+    path('tasks/<int:task_id>/complete/', views.complete_task, name='complete_task'),
+    path('tasks/<int:task_id>/delete/', views.delete_task, name='delete_task'),
+
+    # Contacts
+    path('contacts/', contact_views.contacts, name='contacts'),
+    path('create_contact/', contact_views.create_contact, name='create_contact'),
+    path('contacts/<int:contact_id>/', contact_views.contact_detail, name='contact_detail'),
+    path('contacts/<int:contact_id>/update/', contact_views.update_contact, name='update_contact'),
+    path('contacts/<int:contact_id>/delete/', contact_views.delete_contact, name='delete_contact'),
 ]
